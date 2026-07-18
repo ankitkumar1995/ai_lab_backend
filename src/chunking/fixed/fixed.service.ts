@@ -2,6 +2,7 @@ import path from "node:path";
 
 import { parsePdf } from "./fixed.parser";
 import { ParsedDocument } from "./fixed.types";
+import { FixedChunker } from "./fixed.chunker";
 
 export async function uploadPdf(
   file: Express.Multer.File,
@@ -18,4 +19,13 @@ export async function uploadPdf(
     characterCount: parsed.text.length,
     text: parsed.text,
   };
+}
+
+export function createChunks(text: string) {
+  const chunker = new FixedChunker({
+    chunkSize: 500,
+    chunkOverlap: 100,
+  });
+
+  return chunker.chunk(text);
 }

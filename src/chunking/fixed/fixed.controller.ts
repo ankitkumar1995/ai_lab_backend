@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { uploadPdf } from "./fixed.service";
+import { createChunks, uploadPdf } from "./fixed.service";
 
 export async function uploadDocument(req: Request, res: Response) {
   try {
@@ -16,4 +16,16 @@ export async function uploadDocument(req: Request, res: Response) {
     console.error("Error uploading document:", error);
     return res.status(500).json({ error: "Error uploading document" });
   }
+}
+
+export async function previewChunks(req: Request, res: Response) {
+  const { text } = req.body;
+
+  const chunks = createChunks(text);
+
+  return res.json({
+    totalChunks: chunks.length,
+
+    chunks,
+  });
 }

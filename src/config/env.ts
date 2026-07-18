@@ -5,7 +5,7 @@ dotenv.config();
 
 const envSchema = z.object({
   PORT: z.string().default("5000"),
-  MODEL_PROVIDER: z.enum(["gemini", "openai", "anthropic"]),
+  MODEL_PROVIDER: z.enum(["gemini", "openai", "anthropic", "claude"]),
   GOOGLE_API_KEY: z.string().optional(),
 
   OPENAI_API_KEY: z.string().optional(),
