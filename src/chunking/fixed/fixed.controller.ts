@@ -1,16 +1,21 @@
 import { Request, Response } from "express";
-import { createChunks, uploadPdf } from "./fixed.service";
+import { createChunks, ingestDocument, parseDocument } from "./fixed.service";
 
 export async function uploadDocument(req: Request, res: Response) {
   try {
     if (!req.file) {
       return res.status(400).json({ error: "No file uploaded" });
     }
-    const document = await uploadPdf(req.file);
+    const parsedDocument = await parseDocument(req.file);
+
+    const result = await ingestDocument(parsedDocument);
+
     return res.status(200).json({
       success: true,
-      message: "Document uploaded successfully",
-      data: document,
+
+      message: "Document indexed successfully.",
+
+      data: result,
     });
   } catch (error) {
     console.error("Error uploading document:", error);

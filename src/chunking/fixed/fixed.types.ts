@@ -1,4 +1,5 @@
 export interface ParsedDocument {
+  documentId: string;
   fileName: string;
   filePath: string;
   pageCount: number;
@@ -26,4 +27,16 @@ export interface FixedChunk {
 export interface ChunkOptions {
   chunkSize: number;
   chunkOverlap: number;
+}
+export interface EmbeddedChunk extends FixedChunk {
+  embedding: number[];
+}
+export interface DocumentIngestionResult {
+  documentId: string;
+  fileName: string;
+  totalChunks: number;
+  totalPages: number;
+  totalCharacters: number;
+  totalWords: number;
+  uploadedAt: Date;
 }

@@ -20,18 +20,15 @@ export class GeminiEmbeddingProvider implements EmbeddingProvider {
       contents: text,
     });
 
-    return response.embeddings[0].values;
+    return response?.embeddings?.[0].values ?? [];
   }
-
   async embedMany(texts: string[]): Promise<number[][]> {
-    const vectors: number[][] = [];
+    const embeddings: number[][] = [];
 
     for (const text of texts) {
-      const embedding = await this.embed(text);
-
-      vectors.push(embedding);
+      embeddings.push(await this.embed(text));
     }
 
-    return vectors;
+    return embeddings;
   }
 }
